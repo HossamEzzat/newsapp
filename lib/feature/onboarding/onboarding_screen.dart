@@ -5,6 +5,7 @@ import 'package:newsapp/feature/onboarding/models/onboarding_model.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../controller/onboarding_controller.dart';
+import '../../core/theme/app_colors.dart';
 import '../home/homescreen.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -73,7 +74,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w400,
-                                    color: Color(0xffC53030),
+                                    color: AppColors.primaryColor,
                                   ),
                                 ),
                               ),
@@ -114,7 +115,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         count: 3,
                         effect: SwapEffect(
                           dotColor: Colors.grey,
-                          activeDotColor: Color(0xffC53030),
+                          activeDotColor: AppColors.primaryColor,
                         ),
                       ),
                       Spacer(),
@@ -130,7 +131,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xffC53030),
+                            backgroundColor: AppColors.primaryColor,
                             foregroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(2),

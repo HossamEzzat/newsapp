@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'controller/onboarding_controller.dart';
-import 'core/app_theme.dart';
+import 'core/theme/app_theme.dart';
+import 'feature/auth/login_screen/login_screen.dart';
 import 'feature/onboarding/onboarding_screen.dart';
 
 void main() {
@@ -22,9 +23,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: appTheme,
-        home: OnboardingScreen(),
+        home: LoginScreen(),
       ),
     );
   }
 }
-
