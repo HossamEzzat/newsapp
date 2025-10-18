@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:newsapp/core/theme/app_colors.dart';
 
-class LoginScreen extends StatelessWidget {
+import '../../../core/widgets/customTextField.dart';
+import '../signup_screen/signup_screen.dart';
+
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  bool _obscureText = true;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +57,24 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 // Email field
-                _buildTextField(
-                  hintText: 'Email',
-                  prefixIcon: Icons.email_outlined,
+                CustomTextfield(
+                  hintText: "hoss@gmail.com",
+                  controller: emailController,
                   isPassword: false,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your email';
+                    }
+                    // Regex pattern for email validation
+                    final emailRegex = RegExp(
+                      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+                    );
+
+                    if (!emailRegex.hasMatch(value)) {
+                      return 'Please enter a valid email address';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 20),
                 Text(
@@ -60,30 +86,39 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 // Password field
-                _buildTextField(
-                  hintText: 'Password',
-                  prefixIcon: Icons.lock_outline,
-                  isPassword: true,
-                ),
-                const SizedBox(height: 10),
-
-                // Forgot password
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {
-                      // Add forgot password logic
-                    },
-                    child: const Text(
-                      'Forgot Password?',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                      ),
+                CustomTextfield(
+                  hintText: "***********",
+                  controller: passController,
+                  isPassword: _obscureText,
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _obscureText ? Icons.visibility : Icons.visibility_off,
                     ),
+                    onPressed: () {
+                      setState(() {
+                        _obscureText = !_obscureText;
+                      });
+                    },
                   ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your password';
+                    }
+
+                    // Regex pattern for password validation
+                    // At least 8 characters, 1 uppercase, 1 lowercase, 1 number, 1 special character
+                    final passwordRegex = RegExp(
+                      r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
+                    );
+
+                    if (!passwordRegex.hasMatch(value)) {
+                      return 'Password must contain:\n• 8+ characters\n• 1 uppercase letter\n• 1 lowercase letter\n• 1 number\n• 1 special character (@\$!%*?&)';
+                    }
+                    return null;
+                  },
                 ),
-                const SizedBox(height: 30),
+
+                const SizedBox(height: 20),
 
                 // Login button
                 SizedBox(
@@ -94,7 +129,7 @@ class LoginScreen extends StatelessWidget {
                       // Add login logic
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
+                      backgroundColor: AppColors.primaryColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -115,18 +150,24 @@ class LoginScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       "Don't have an account?",
-                      style: TextStyle(color: Colors.white70),
+                      style: TextStyle(color: AppColors.textSecondColor),
                     ),
                     TextButton(
                       onPressed: () {
                         // Add navigation to sign up screen
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SignupScreen(),
+                          ),
+                        );
                       },
-                      child: const Text(
+                      child: Text(
                         'Sign Up',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: AppColors.primaryColor,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -135,32 +176,6 @@ class LoginScreen extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  // Helper method to build text fields
-  Widget _buildTextField({
-    required String hintText,
-    required IconData prefixIcon,
-    required bool isPassword,
-  }) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.9),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: TextField(
-        obscureText: isPassword,
-        decoration: InputDecoration(
-          hintText: hintText,
-          border: InputBorder.none,
-          prefixIcon: Icon(prefixIcon),
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 16,
           ),
         ),
       ),
