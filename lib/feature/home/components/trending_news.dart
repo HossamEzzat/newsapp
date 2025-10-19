@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newsapp/core/enums/requset_status_enums.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/theme/app_colors.dart';
@@ -63,52 +64,100 @@ class TrendingNews extends StatelessWidget {
                   height: 90,
                   child: Consumer<HomeController>(
                     builder: (context, provider, child) {
-                      return (provider.errorMessage?.isNotEmpty ?? false)
-                          ? Center(
-                              child: Text(
-                                provider.errorMessage.toString(),
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                            )
-                          : provider.everythingLoading
-                          ? const Center(child: CircularProgressIndicator())
-                          : ListView.builder(
-                              itemCount: provider.newsEverythingList.length,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (BuildContext context, int index) {
-                                final newsItem =
-                                    provider.newsEverythingList[index];
-                                final imageUrl =
-                                    newsItem.urlToImage ??
-                                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTO6OyfeCvk89wc0YZsJUBxpksq4iEqaxWiA&s";
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 6,
+                      switch (provider.everythingStatus) {
+                        case RequsetStatusEnums.loading:
+                          return Center(child: CircularProgressIndicator());
+                        case RequsetStatusEnums.error:
+                          return Center(
+                            child: Text(
+                              provider.errorMessage.toString(),
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          );
+                        case RequsetStatusEnums.loaded:
+                          return ListView.builder(
+                            itemCount: provider.newsEverythingList.length,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (BuildContext context, int index) {
+                              final newsItem =
+                                  provider.newsEverythingList[index];
+                              final imageUrl =
+                                  newsItem.urlToImage ??
+                                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTO6OyfeCvk89wc0YZsJUBxpksq4iEqaxWiA&s";
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 6,
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.network(
+                                    imageUrl,
+                                    width: 130,
+                                    height: 100,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Container(
+                                        width: 120,
+                                        height: 90,
+                                        color: Colors.grey[300],
+                                        child: const Icon(
+                                          Icons.broken_image,
+                                          color: Colors.grey,
+                                        ),
+                                      );
+                                    },
                                   ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Image.network(
-                                      imageUrl,
-                                      width: 130,
-                                      height: 100,
-                                      fit: BoxFit.cover,
-                                      errorBuilder:
-                                          (context, error, stackTrace) {
-                                            return Container(
-                                              width: 120,
-                                              height: 90,
-                                              color: Colors.grey[300],
-                                              child: const Icon(
-                                                Icons.broken_image,
-                                                color: Colors.grey,
-                                              ),
-                                            );
-                                          },
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
+                                ),
+                              );
+                            },
+                          );
+                      }
+                      // return (provider.errorMessage?.isNotEmpty ?? false)
+                      //     ? Center(
+                      //         child: Text(
+                      //           provider.errorMessage.toString(),
+                      //           style: const TextStyle(fontSize: 16),
+                      //         ),
+                      //       )
+                      //     : provider.everythingLoading
+                      //     ? const Center(child: CircularProgressIndicator())
+                      //     : ListView.builder(
+                      //         itemCount: provider.newsEverythingList.length,
+                      //         scrollDirection: Axis.horizontal,
+                      //         itemBuilder: (BuildContext context, int index) {
+                      //           final newsItem =
+                      //               provider.newsEverythingList[index];
+                      //           final imageUrl =
+                      //               newsItem.urlToImage ??
+                      //               "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTO6OyfeCvk89wc0YZsJUBxpksq4iEqaxWiA&s";
+                      //           return Padding(
+                      //             padding: const EdgeInsets.symmetric(
+                      //               horizontal: 6,
+                      //             ),
+                      //             child: ClipRRect(
+                      //               borderRadius: BorderRadius.circular(10),
+                      //               child: Image.network(
+                      //                 imageUrl,
+                      //                 width: 130,
+                      //                 height: 100,
+                      //                 fit: BoxFit.cover,
+                      //                 errorBuilder:
+                      //                     (context, error, stackTrace) {
+                      //                       return Container(
+                      //                         width: 120,
+                      //                         height: 90,
+                      //                         color: Colors.grey[300],
+                      //                         child: const Icon(
+                      //                           Icons.broken_image,
+                      //                           color: Colors.grey,
+                      //                         ),
+                      //                       );
+                      //                     },
+                      //               ),
+                      //             ),
+                      //           );
+                      //         },
+                      //       );
                     },
                   ),
                 ),

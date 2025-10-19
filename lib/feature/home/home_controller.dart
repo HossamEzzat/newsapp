@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../core/data_source/remote_data/api_config.dart';
 import '../../core/data_source/remote_data/api_service.dart';
+import '../../core/enums/requset_status_enums.dart';
 import 'models/news_article_model.dart';
 
 class HomeController extends ChangeNotifier {
@@ -9,8 +10,10 @@ class HomeController extends ChangeNotifier {
     getEverything();
   }
 
+  RequsetStatusEnums everythingStatus = RequsetStatusEnums.loading;
   bool topHeadlineLoading = true;
-  bool everythingLoading = true;
+
+  //bool everythingLoading = true;
   String? errorMessage;
 
   List<NewsArticleModel> newsTopHeadlineList = [];
@@ -44,9 +47,6 @@ class HomeController extends ChangeNotifier {
   /// Fetch everything news
   Future<void> getEverything() async {
     try {
-      everythingLoading = true;
-      notifyListeners();
-
       final result = await apiService.get(ApiConfig.everythingEndpoint);
       final articles = (result["articles"] as List?) ?? [];
 
@@ -54,13 +54,14 @@ class HomeController extends ChangeNotifier {
           .map((e) => NewsArticleModel.fromJson(e))
           .toList()
           .cast<NewsArticleModel>();
-
+      everythingStatus = RequsetStatusEnums.loaded;
       errorMessage = null;
     } catch (e) {
       errorMessage = "Failed to load news: $e";
+      everythingStatus = RequsetStatusEnums.error;
     } finally {
-      everythingLoading = false;
       notifyListeners();
     }
+    notifyListeners();
   }
 }
