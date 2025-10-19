@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newsapp/core/enums/requset_status_enums.dart';
+import 'package:newsapp/feature/home/components/view_all_components.dart';
 import 'package:provider/provider.dart';
-
 import '../../../core/theme/app_colors.dart';
 import '../home_controller.dart';
 
@@ -29,35 +29,7 @@ class TrendingNews extends StatelessWidget {
             child: Column(
               children: [
                 Image.asset("assets/images/vec.png"),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Trending News",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.backgroundColor,
-                          fontSize: 16,
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          "View all",
-                          style: TextStyle(
-                            color: AppColors.backgroundColor,
-                            decoration: TextDecoration.underline,
-                            decorationColor: AppColors.backgroundColor,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                ViewAllComponents(title: "Trending News"),
                 const SizedBox(height: 8),
 
                 SizedBox(
@@ -76,7 +48,9 @@ class TrendingNews extends StatelessWidget {
                           );
                         case RequsetStatusEnums.loaded:
                           return ListView.builder(
-                            itemCount: provider.newsEverythingList.length,
+                            itemCount: provider.newsEverythingList
+                                .take(7)
+                                .length,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (BuildContext context, int index) {
                               final newsItem =
@@ -88,76 +62,42 @@ class TrendingNews extends StatelessWidget {
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 6,
                                 ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.network(
-                                    imageUrl,
-                                    width: 130,
-                                    height: 100,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (context, error, stackTrace) {
-                                      return Container(
-                                        width: 120,
-                                        height: 90,
-                                        color: Colors.grey[300],
-                                        child: const Icon(
-                                          Icons.broken_image,
-                                          color: Colors.grey,
-                                        ),
-                                      );
-                                    },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width:
+                                          2.0, // Adjust border width as needed
+                                    ),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    // Slightly smaller than container border radius
+                                    child: Image.network(
+                                      imageUrl,
+                                      width: 230,
+                                      height: 200,
+                                      fit: BoxFit.fill,
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                            return Container(
+                                              width: 120,
+                                              height: 90,
+                                              color: Colors.grey[300],
+                                              child: const Icon(
+                                                Icons.broken_image,
+                                                color: Colors.grey,
+                                              ),
+                                            );
+                                          },
+                                    ),
                                   ),
                                 ),
                               );
                             },
                           );
                       }
-                      // return (provider.errorMessage?.isNotEmpty ?? false)
-                      //     ? Center(
-                      //         child: Text(
-                      //           provider.errorMessage.toString(),
-                      //           style: const TextStyle(fontSize: 16),
-                      //         ),
-                      //       )
-                      //     : provider.everythingLoading
-                      //     ? const Center(child: CircularProgressIndicator())
-                      //     : ListView.builder(
-                      //         itemCount: provider.newsEverythingList.length,
-                      //         scrollDirection: Axis.horizontal,
-                      //         itemBuilder: (BuildContext context, int index) {
-                      //           final newsItem =
-                      //               provider.newsEverythingList[index];
-                      //           final imageUrl =
-                      //               newsItem.urlToImage ??
-                      //               "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTO6OyfeCvk89wc0YZsJUBxpksq4iEqaxWiA&s";
-                      //           return Padding(
-                      //             padding: const EdgeInsets.symmetric(
-                      //               horizontal: 6,
-                      //             ),
-                      //             child: ClipRRect(
-                      //               borderRadius: BorderRadius.circular(10),
-                      //               child: Image.network(
-                      //                 imageUrl,
-                      //                 width: 130,
-                      //                 height: 100,
-                      //                 fit: BoxFit.cover,
-                      //                 errorBuilder:
-                      //                     (context, error, stackTrace) {
-                      //                       return Container(
-                      //                         width: 120,
-                      //                         height: 90,
-                      //                         color: Colors.grey[300],
-                      //                         child: const Icon(
-                      //                           Icons.broken_image,
-                      //                           color: Colors.grey,
-                      //                         ),
-                      //                       );
-                      //                     },
-                      //               ),
-                      //             ),
-                      //           );
-                      //         },
-                      //       );
                     },
                   ),
                 ),
