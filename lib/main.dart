@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'controller/onboarding_controller.dart';
 import 'core/theme/app_theme.dart';
 import 'feature/auth/login_screen/login_screen.dart';
+import 'feature/home/homescreen.dart';
+import 'feature/main_screen/MainScreen.dart';
 import 'feature/onboarding/onboarding_screen.dart';
 
 void main() {
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: appTheme,
-        home: LoginScreen(),
+        home: Mainscreen(),
       ),
     );
   }
