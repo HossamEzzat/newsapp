@@ -3,9 +3,16 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 
 class ViewAllComponents extends StatelessWidget {
-  const ViewAllComponents({super.key, required this.title});
+  ViewAllComponents({
+    super.key,
+    required this.title,
+    required this.titleColor,
+    required this.onTap,
+  });
 
-  final String title;
+  String title;
+  Color titleColor;
+  Function onTap = () {};
 
   @override
   Widget build(BuildContext context) {
@@ -18,18 +25,18 @@ class ViewAllComponents extends StatelessWidget {
             title,
             style: TextStyle(
               fontWeight: FontWeight.w700,
-              color: AppColors.backgroundColor,
+              color: titleColor,
               fontSize: 16,
             ),
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: () => onTap,
             child: Text(
               "View all",
               style: TextStyle(
-                color: AppColors.backgroundColor,
+                color: titleColor,
                 decoration: TextDecoration.underline,
-                decorationColor: AppColors.backgroundColor,
+                decorationColor: titleColor,
                 fontWeight: FontWeight.w400,
                 fontSize: 16,
               ),

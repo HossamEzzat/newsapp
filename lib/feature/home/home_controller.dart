@@ -15,6 +15,7 @@ class HomeController extends ChangeNotifier {
 
   //bool everythingLoading = true;
   String? errorMessage;
+  String? selectedCategory;
 
   List<NewsArticleModel> newsTopHeadlineList = [];
   List<NewsArticleModel> newsEverythingList = [];
@@ -22,12 +23,15 @@ class HomeController extends ChangeNotifier {
   final ApiService apiService = ApiService();
 
   /// Fetch top headlines
-  Future<void> getTopHeadline() async {
+  Future<void> getTopHeadline({String? category}) async {
     try {
       topHeadlineLoading = true;
       notifyListeners();
 
-      final result = await apiService.get(ApiConfig.topHeadlineEndpoint);
+      final result = await apiService.get(
+        "${ApiConfig.topHeadlineEndpoint}${category != null ? '&category=$category' : ''}",
+      );
+     
       final articles = (result["articles"] as List?) ?? [];
 
       newsTopHeadlineList = articles
@@ -62,6 +66,12 @@ class HomeController extends ChangeNotifier {
     } finally {
       notifyListeners();
     }
+    notifyListeners();
+  }
+
+  void selectCategory(String category) {
+    selectedCategory = category;
+    getTopHeadline(category: category);
     notifyListeners();
   }
 }
