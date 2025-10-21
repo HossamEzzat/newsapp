@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newsapp/feature/home/home_controller.dart';
 import 'package:provider/provider.dart';
 
 import 'controller/onboarding_controller.dart';
@@ -9,7 +10,14 @@ import 'feature/main_screen/MainScreen.dart';
 import 'feature/onboarding/onboarding_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (BuildContext context) {
+        return HomeController();
+      },
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

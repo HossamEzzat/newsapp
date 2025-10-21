@@ -11,9 +11,9 @@ class HomeController extends ChangeNotifier {
   }
 
   RequsetStatusEnums everythingStatus = RequsetStatusEnums.loading;
+  RequsetStatusEnums topHeadLineStatus = RequsetStatusEnums.loading;
   bool topHeadlineLoading = true;
-
-  //bool everythingLoading = true;
+  bool everythingLoading = true;
   String? errorMessage;
   String? selectedCategory;
 
@@ -25,23 +25,25 @@ class HomeController extends ChangeNotifier {
   /// Fetch top headlines
   Future<void> getTopHeadline({String? category}) async {
     try {
+      Future.delayed(const Duration(milliseconds: 500));
       topHeadlineLoading = true;
       notifyListeners();
 
       final result = await apiService.get(
         "${ApiConfig.topHeadlineEndpoint}${category != null ? '&category=$category' : ''}",
       );
-     
+
       final articles = (result["articles"] as List?) ?? [];
 
       newsTopHeadlineList = articles
           .map((e) => NewsArticleModel.fromJson(e))
           .toList()
           .cast<NewsArticleModel>();
-
+      topHeadLineStatus = RequsetStatusEnums.loaded;
       errorMessage = null;
     } catch (e) {
       errorMessage = "Failed to load top headlines: $e";
+      topHeadLineStatus = RequsetStatusEnums.error;
     } finally {
       topHeadlineLoading = false;
       notifyListeners();
@@ -51,6 +53,7 @@ class HomeController extends ChangeNotifier {
   /// Fetch everything news
   Future<void> getEverything() async {
     try {
+      Future.delayed(const Duration(milliseconds: 500));
       final result = await apiService.get(ApiConfig.everythingEndpoint);
       final articles = (result["articles"] as List?) ?? [];
 

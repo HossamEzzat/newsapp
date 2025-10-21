@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class CustomCachedNetworkImage extends StatelessWidget {
   final String imageUrl;
@@ -27,7 +28,10 @@ class CustomCachedNetworkImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String finalImageUrl = (imageUrl.isNotEmpty) ? imageUrl : (defaultImageUrl ?? "https://via.placeholder.com/100/CCCCCC/808080?text=?");
+    final String finalImageUrl = (imageUrl.isNotEmpty)
+        ? imageUrl
+        : (defaultImageUrl ??
+              "https://via.placeholder.com/100/CCCCCC/808080?text=?");
 
     Widget imageWidget = CachedNetworkImage(
       imageUrl: finalImageUrl,
@@ -35,7 +39,8 @@ class CustomCachedNetworkImage extends StatelessWidget {
       height: height,
       fit: fit,
       placeholder: (context, url) => placeholder ?? _defaultPlaceholder(),
-      errorWidget: (context, url, error) => errorWidget ?? _defaultErrorWidget(),
+      errorWidget: (context, url, error) =>
+          errorWidget ?? _defaultErrorWidget(),
     );
 
     if (isCircular) {
@@ -52,22 +57,23 @@ class CustomCachedNetworkImage extends StatelessWidget {
       return CircleAvatar(
         radius: (width != null) ? width! / 2 : 10,
         backgroundColor: Colors.grey[300],
-        child: const Icon(
-          Icons.person,
-          color: Colors.white,
-        ),
+        child: const Icon(Icons.person, color: Colors.white),
       );
     }
-    
+
     return Container(
       width: width,
       height: height,
       color: Colors.grey[300],
-      child: const Center(
+      child: Center(
         child: SizedBox(
-          width: 20,
-          height: 20,
-          child: CircularProgressIndicator(strokeWidth: 2),
+          width: width,
+          height: height,
+          child: Shimmer.fromColors(
+            baseColor: Colors.grey,
+            highlightColor: Colors.white,
+            child: Container(width: width, height: height),
+          ),
         ),
       ),
     );
@@ -78,21 +84,15 @@ class CustomCachedNetworkImage extends StatelessWidget {
       return CircleAvatar(
         radius: (width != null) ? width! / 2 : 10,
         backgroundColor: Colors.red,
-        child: const Icon(
-          Icons.error,
-          color: Colors.white,
-        ),
+        child: const Icon(Icons.error, color: Colors.white),
       );
     }
-    
+
     return Container(
       width: width,
       height: height,
       color: Colors.grey,
-      child: const Icon(
-        Icons.broken_image,
-        color: Colors.white,
-      ),
+      child: const Icon(Icons.broken_image, color: Colors.white),
     );
   }
 }

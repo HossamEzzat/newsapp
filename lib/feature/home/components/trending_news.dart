@@ -1,8 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:newsapp/core/enums/requset_status_enums.dart';
 import 'package:newsapp/feature/home/components/view_all_components.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/widgets/custom_cached_network_image.dart';
 import '../home_controller.dart';
 
 class TrendingNews extends StatelessWidget {
@@ -43,7 +46,17 @@ class TrendingNews extends StatelessWidget {
                       builder: (context, provider, child) {
                         switch (provider.everythingStatus) {
                           case RequsetStatusEnums.loading:
-                            return Center(child: CircularProgressIndicator());
+                            return Center(
+                              child: Shimmer.fromColors(
+                                baseColor: Colors.grey,
+                                highlightColor: Colors.white,
+                                child: Container(
+                                  width: 230,
+                                  height: 200,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            );
                           case RequsetStatusEnums.error:
                             return Center(
                               child: Text(
@@ -60,9 +73,14 @@ class TrendingNews extends StatelessWidget {
                               itemBuilder: (BuildContext context, int index) {
                                 final newsItem =
                                     provider.newsEverythingList[index];
-                                final imageUrl =
-                                    newsItem.urlToImage ??
-                                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTO6OyfeCvk89wc0YZsJUBxpksq4iEqaxWiA&s";
+
+                                // CORRECTED: Use .isEmpty to check for "" as well as null/default
+                                final String imageUrl =
+                                    newsItem.urlToImage != null &&
+                                        newsItem.urlToImage!.isNotEmpty
+                                    ? newsItem.urlToImage!
+                                    : "https://via.placeholder.com/230x200";
+
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 6,
@@ -72,30 +90,16 @@ class TrendingNews extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(10),
                                       border: Border.all(
                                         color: Colors.white,
-                                        width:
-                                            2.0, // Adjust border width as needed
+                                        width: 2.0,
                                       ),
                                     ),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(8),
-                                      // Slightly smaller than container border radius
-                                      child: Image.network(
-                                        imageUrl,
+                                      child: CustomCachedNetworkImage(
+                                        imageUrl: imageUrl,
                                         width: 230,
                                         height: 200,
                                         fit: BoxFit.fill,
-                                        errorBuilder:
-                                            (context, error, stackTrace) {
-                                              return Container(
-                                                width: 120,
-                                                height: 90,
-                                                color: Colors.grey[300],
-                                                child: const Icon(
-                                                  Icons.broken_image,
-                                                  color: Colors.grey,
-                                                ),
-                                              );
-                                            },
                                       ),
                                     ),
                                   ),

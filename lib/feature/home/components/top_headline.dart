@@ -1,9 +1,10 @@
 import 'dart:math';
-import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:newsapp/feature/home/home_controller.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/custom_cached_network_image.dart';
@@ -34,14 +35,19 @@ class TopHeadline extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Row(
                 children: [
-                  // 1. Main Article Image using CustomCachedNetworkImage
-                  CustomCachedNetworkImage(
-                    imageUrl: article.urlToImage ?? "",
-                    width: 140,
-                    height: 70,
-                    fit: BoxFit.cover,
+                  // 1. Main Article Image (Already using CachedNetworkImage)
+                  ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    defaultImageUrl: "https://via.placeholder.com/140x70",
+                    child: CustomCachedNetworkImage(
+                      imageUrl:
+                          (article.urlToImage != null &&
+                              article.urlToImage!.isNotEmpty)
+                          ? article.urlToImage!
+                          : "https://via.placeholder.com/140x70",
+                      width: 140,
+                      height: 70,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
@@ -60,14 +66,14 @@ class TopHeadline extends StatelessWidget {
                         const SizedBox(height: 8),
                         Row(
                           children: [
-                            // 2. Avatar Image using CustomCachedNetworkImage
-                            CustomCachedNetworkImage(
-                              imageUrl: avatarImageUrl,
-                              width: 20,
-                              height: 20,
-                              fit: BoxFit.cover,
-                              isCircular: true,
-                              defaultImageUrl: _defaultAvatarUrl,
+                            // 2. Avatar Image (Replaced NetworkImage with CachedNetworkImage)
+                            ClipOval(
+                              child: CustomCachedNetworkImage(
+                                imageUrl: avatarImageUrl,
+                                width: 20,
+                                height: 20,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                             const SizedBox(width: 4),
                             Expanded(

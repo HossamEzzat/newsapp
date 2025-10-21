@@ -13,4 +13,15 @@ ThemeData appTheme = ThemeData(
     unselectedItemColor: AppColors.textSecondColor,
     type: BottomNavigationBarType.fixed,
   ),
+  appBarTheme: AppBarTheme(
+    backgroundColor: AppColors.backgroundColor,
+    elevation: 0,
+    centerTitle: true,
+    titleTextStyle: TextStyle(
+      color: AppColors.textSecondColor,
+      fontSize: 20,
+      fontWeight: FontWeight.w600,
+    ),
+    iconTheme: IconThemeData(color: AppColors.textSecondColor),
+  ),
 );
