@@ -98,7 +98,7 @@ class TopHeadline extends StatelessWidget {
                                   ),
                                   const SizedBox(width: 5),
                                   Text(
-                                    DateFormat('MMM dd, yyyy').format(
+                                    DateFormat('MMM dd').format(
                                       DateTime.parse(article.publishedAt),
                                     ),
                                     style: TextStyle(
@@ -108,6 +108,10 @@ class TopHeadline extends StatelessWidget {
                                   ),
                                 ],
                               ),
+                            ),
+                            IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.bookmark_border_outlined),
                             ),
                           ],
                         ),

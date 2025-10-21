@@ -155,7 +155,7 @@ class CategoriesScreen extends StatelessWidget {
                                           const SizedBox(width: 5),
                                           // Note: You should handle a potential null/invalid `publishedAt`
                                           Text(
-                                            DateFormat('MMM dd, yyyy').format(
+                                            DateFormat('MMM dd').format(
                                               DateTime.tryParse(
                                                     article.publishedAt ?? '',
                                                   ) ??
@@ -164,6 +164,12 @@ class CategoriesScreen extends StatelessWidget {
                                             style: TextStyle(
                                               fontSize: 10,
                                               color: AppColors.textSecondColor,
+                                            ),
+                                          ),
+                                          IconButton(
+                                            onPressed: () {},
+                                            icon: Icon(
+                                              Icons.bookmark_border_outlined,
                                             ),
                                           ),
                                         ],
