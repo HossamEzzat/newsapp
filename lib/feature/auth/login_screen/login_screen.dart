@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newsapp/core/constants/app_size.dart';
 import 'package:newsapp/core/theme/app_colors.dart';
 
 import '../../../core/widgets/customTextField.dart';
@@ -32,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
         height: double.infinity,
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(AppSize.w16),
             child: Form(
               key: _key,
               child: Column(
@@ -42,21 +43,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   Center(
                     child: Image.asset("assets/images/Vector.png", height: 45),
                   ),
-                  const SizedBox(height: 40),
+                  SizedBox(height: AppSize.h40),
                   Text(
                     "Welcome to Newts",
                     style: TextStyle(
                       fontWeight: FontWeight.w700,
-                      fontSize: 20,
+                      fontSize: AppSize.f20,
                       color: AppColors.textSecondColor,
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: AppSize.h16),
                   Text(
                     "Email",
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontSize: 16,
+                      fontSize: AppSize.f16,
                       color: AppColors.textSecondColor,
                     ),
                   ),
@@ -80,12 +81,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: AppSize.h16),
                   Text(
                     "Password",
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontSize: 16,
+                      fontSize: AppSize.f16,
                       color: AppColors.textSecondColor,
                     ),
                   ),
@@ -122,12 +123,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
 
-                  const SizedBox(height: 20),
+                  SizedBox(height: AppSize.h20),
 
                   // Login button
                   SizedBox(
                     width: double.infinity,
-                    height: 50,
+                    height: AppSize.h50,
                     child: ElevatedButton(
                       onPressed: () {
                         if (_key.currentState!.validate()) {
@@ -145,17 +146,17 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: const Text(
+                      child: Text(
                         'Sign In',
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: AppSize.f16,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: AppSize.h20),
 
                   // Sign up option
                   Row(

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:newsapp/feature/home/home_controller.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/custom_cached_network_image.dart';
@@ -21,9 +20,9 @@ class TopHeadline extends StatelessWidget {
     return Consumer<HomeController>(
       builder: (context, provider, child) {
         return SliverList.builder(
-          itemCount: provider.newsTopHeadlineList.length,
+          itemCount: provider.newsTopHeadLineList.length,
           itemBuilder: (context, index) {
-            final article = provider.newsTopHeadlineList[index];
+            final article = provider.newsTopHeadLineList[index];
 
             // Define the image URL for the avatar, ensuring it's a valid string
             final String avatarImageUrl =

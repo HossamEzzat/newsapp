@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:newsapp/feature/home/home_controller.dart';
 import 'package:provider/provider.dart';
 
 import 'controller/onboarding_controller.dart';
 import 'core/theme/app_theme.dart';
-import 'feature/auth/login_screen/login_screen.dart';
-import 'feature/home/homescreen.dart';
+import 'feature/home/repos/news_repository.dart';
 import 'feature/main_screen/MainScreen.dart';
-import 'feature/onboarding/onboarding_screen.dart';
 
-void main() {
+Future<void> main() async {
+  await ScreenUtil.ensureScreenSize();
   runApp(
     ChangeNotifierProvider(
       create: (BuildContext context) {
-        return HomeController();
+        return HomeController(NewsRepository());
       },
       child: const MyApp(),
     ),
@@ -30,10 +30,13 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => OnboardingController()),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: appTheme,
-        home: Mainscreen(),
+      child: ScreenUtilInit(
+        designSize: const Size(375, 832),
+        builder: (context, child) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: appTheme,
+          home: Mainscreen(),
+        ),
       ),
     );
   }

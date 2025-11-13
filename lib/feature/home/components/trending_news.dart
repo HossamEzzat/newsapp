@@ -1,9 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:newsapp/core/enums/requset_status_enums.dart';
 import 'package:newsapp/feature/home/components/view_all_components.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/custom_cached_network_image.dart';
 import '../home_controller.dart';
@@ -38,7 +39,7 @@ class TrendingNews extends StatelessWidget {
                     titleColor: AppColors.backgroundColor,
                     onTap: () {},
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 16.0.h),
 
                   SizedBox(
                     height: 90,

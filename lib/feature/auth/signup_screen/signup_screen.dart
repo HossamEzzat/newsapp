@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:newsapp/feature/auth/login_screen/login_screen.dart';
 
+import '../../../core/constants/app_size.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/customTextField.dart';
 
@@ -22,7 +22,7 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/images/background.png"),
             fit: BoxFit.cover,
@@ -32,7 +32,7 @@ class _SignupScreenState extends State<SignupScreen> {
         height: double.infinity,
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(AppSize.w16),
             child: Form(
               key: _key,
               child: Column(
@@ -42,21 +42,21 @@ class _SignupScreenState extends State<SignupScreen> {
                   Center(
                     child: Image.asset("assets/images/Vector.png", height: 45),
                   ),
-                  const SizedBox(height: 40),
+                  SizedBox(height: AppSize.h40),
                   Text(
                     "Welcome to Newts",
                     style: TextStyle(
                       fontWeight: FontWeight.w700,
-                      fontSize: 20,
+                      fontSize: AppSize.f20,
                       color: AppColors.textSecondColor,
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: AppSize.h16),
                   Text(
                     "Email",
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontSize: 16,
+                      fontSize: AppSize.f16,
                       color: AppColors.textSecondColor,
                     ),
                   ),
@@ -81,12 +81,12 @@ class _SignupScreenState extends State<SignupScreen> {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: AppSize.h20),
                   Text(
                     "Password",
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontSize: 16,
+                      fontSize: AppSize.f16,
                       color: AppColors.textSecondColor,
                     ),
                   ),
@@ -123,7 +123,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     },
                   ),
 
-                  const SizedBox(height: 20),
+                  SizedBox(height: AppSize.h20),
                   Text(
                     "Confirm Password",
                     style: TextStyle(
