@@ -16,6 +16,7 @@ class AppSize {
   /// padding
 
   /// raduis
+  static double r30 = 30.0.r;
 
   /// font-size
   static double f20 = 20.0.sp;

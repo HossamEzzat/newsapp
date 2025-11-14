@@ -4,8 +4,9 @@ import 'package:newsapp/feature/home/home_controller.dart';
 import 'package:provider/provider.dart';
 
 import 'controller/onboarding_controller.dart';
+import 'core/data_source/remote_data/api_service.dart';
+import 'core/repos/news_repository.dart';
 import 'core/theme/app_theme.dart';
-import 'feature/home/repos/news_repository.dart';
 import 'feature/main_screen/MainScreen.dart';
 
 Future<void> main() async {
@@ -13,7 +14,7 @@ Future<void> main() async {
   runApp(
     ChangeNotifierProvider(
       create: (BuildContext context) {
-        return HomeController(NewsRepository());
+        return HomeController(NewsRepository(ApiService()));
       },
       child: const MyApp(),
     ),

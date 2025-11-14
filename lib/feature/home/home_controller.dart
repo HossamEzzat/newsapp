@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:newsapp/feature/home/repos/news_repository.dart';
 
 import '../../core/enums/requset_status_enums.dart';
+import '../../core/repos/news_repository.dart';
 import 'models/news_article_model.dart';
 
 class HomeController extends ChangeNotifier {

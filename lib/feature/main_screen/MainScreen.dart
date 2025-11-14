@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:newsapp/feature/home/homescreen.dart';
 
+import '../home/search_screen.dart';
+
 class Mainscreen extends StatefulWidget {
   const Mainscreen({super.key});
 
@@ -13,7 +15,7 @@ class _MainscreenState extends State<Mainscreen> {
 
   final List<Widget> screens = [
     Homescreen(),
-    Homescreen(),
+    SearchScreen(),
     Homescreen(),
     Homescreen(),
   ];
