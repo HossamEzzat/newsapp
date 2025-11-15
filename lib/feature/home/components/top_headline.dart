@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/custom_cached_network_image.dart';
+import '../../detail/news_detail_screen.dart';
 
 class TopHeadline extends StatelessWidget {
   const TopHeadline({super.key});
@@ -30,94 +31,108 @@ class TopHeadline extends StatelessWidget {
                 ? article.urlToImage!
                 : _defaultAvatarUrl;
 
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Row(
-                children: [
-                  // 1. Main Article Image (Already using CachedNetworkImage)
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: CustomCachedNetworkImage(
-                      imageUrl:
-                          (article.urlToImage != null &&
-                              article.urlToImage!.isNotEmpty)
-                          ? article.urlToImage!
-                          : "https://via.placeholder.com/140x70",
-                      width: 140,
-                      height: 70,
-                      fit: BoxFit.cover,
-                    ),
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        NewsDetailScreen(newsArticle: article),
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          article.title,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
+                child: Row(
+                  children: [
+                    // 1. Main Article Image (Already using CachedNetworkImage)
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: CustomCachedNetworkImage(
+                        imageUrl:
+                            (article.urlToImage != null &&
+                                article.urlToImage!.isNotEmpty)
+                            ? article.urlToImage!
+                            : "https://via.placeholder.com/140x70",
+                        width: 140,
+                        height: 70,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            article.title,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            // 2. Avatar Image (Replaced NetworkImage with CachedNetworkImage)
-                            ClipOval(
-                              child: CustomCachedNetworkImage(
-                                imageUrl: avatarImageUrl,
-                                width: 20,
-                                height: 20,
-                                fit: BoxFit.cover,
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              // 2. Avatar Image (Replaced NetworkImage with CachedNetworkImage)
+                              ClipOval(
+                                child: CustomCachedNetworkImage(
+                                  imageUrl: avatarImageUrl,
+                                  width: 20,
+                                  height: 20,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            ),
-                            const SizedBox(width: 4),
-                            Expanded(
-                              child: Row(
-                                children: [
-                                  Text(
-                                    (' ${article.author ?? 'Hossam'}.')
-                                        .substring(
-                                          0,
-                                          min(
-                                            10,
-                                            (' ${article.author ?? 'Hossam'}.')
-                                                .length,
+                              const SizedBox(width: 4),
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      (' ${article.author ?? 'Hossam'}.')
+                                          .substring(
+                                            0,
+                                            min(
+                                              10,
+                                              (' ${article.author ?? 'Hossam'}.')
+                                                  .length,
+                                            ),
                                           ),
-                                        ),
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      color: AppColors.textSecondColor,
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        color: AppColors.textSecondColor,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  const SizedBox(width: 5),
-                                  Text(
-                                    DateFormat('MMM dd').format(
-                                      DateTime.parse(article.publishedAt),
+                                    const SizedBox(width: 5),
+                                    Text(
+                                      DateFormat('MMM dd').format(
+                                        DateTime.parse(article.publishedAt),
+                                      ),
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        color: AppColors.textSecondColor,
+                                      ),
                                     ),
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      color: AppColors.textSecondColor,
-                                    ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.bookmark_border_outlined),
-                            ),
-                          ],
-                        ),
-                      ],
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(Icons.bookmark_border_outlined),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             );
           },

@@ -7,6 +7,7 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/custom_cached_network_image.dart';
+import '../../detail/news_detail_screen.dart';
 import '../home_controller.dart';
 
 class TrendingNews extends StatelessWidget {
@@ -82,25 +83,37 @@ class TrendingNews extends StatelessWidget {
                                     ? newsItem.urlToImage!
                                     : "https://via.placeholder.com/230x200";
 
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 6,
-                                  ),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(
-                                        color: Colors.white,
-                                        width: 2.0,
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => NewsDetailScreen(
+                                          newsArticle: newsItem,
+                                        ),
                                       ),
+                                    );
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 6,
                                     ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8),
-                                      child: CustomCachedNetworkImage(
-                                        imageUrl: imageUrl,
-                                        width: 230,
-                                        height: 200,
-                                        fit: BoxFit.fill,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                          color: Colors.white,
+                                          width: 2.0,
+                                        ),
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: CustomCachedNetworkImage(
+                                          imageUrl: imageUrl,
+                                          width: 230,
+                                          height: 200,
+                                          fit: BoxFit.fill,
+                                        ),
                                       ),
                                     ),
                                   ),
